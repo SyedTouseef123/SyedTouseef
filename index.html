@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SyedTouseef | Portfolio</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#FF0040',secondary:'#00A6FF'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Poppins', sans-serif;
+scroll-behavior: smooth;
+}
+.rotate-animation {
+animation: rotate 1.5s ease-out;
+}
+@keyframes rotate {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+.fade-in {
+opacity: 0;
+transform: translateY(20px);
+transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-in.visible {
+opacity: 1;
+transform: translateY(0);
+}
+.motion-bg {
+background: linear-gradient(-45deg, #FF0040, #00A6FF, #FF3366, #0066FF);
+background-size: 400% 400%;
+animation: gradient 8s ease infinite;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: -1;
+opacity: 0.15;
+}
+.motion-bg::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.1) 10%,
+    transparent 10%,
+    transparent 20%
+);
+animation: scanlines 8s linear infinite;
+}
+@keyframes scanlines {
+0% {
+    transform: translateX(-100%);
+}
+100% {
+    transform: translateX(100%);
+}
+}
+.glow-effect {
+position: relative;
+}
+.glow-effect::after {
+content: '';
+position: absolute;
+top: -2px;
+left: -2px;
+right: -2px;
+bottom: -2px;
+background: linear-gradient(45deg, #7C3AED, #2DD4BF);
+border-radius: inherit;
+z-index: -1;
+opacity: 0;
+transition: opacity 0.3s ease;
+}
+.glow-effect:hover::after {
+opacity: 0.6;
+}
+@keyframes gradient {
+0% { 
+    background-position: 0% 50%;
+    filter: hue-rotate(0deg);
+}
+50% { 
+    background-position: 100% 50%;
+    filter: hue-rotate(180deg);
+}
+100% { 
+    background-position: 0% 50%;
+    filter: hue-rotate(360deg);
+}
+}
+.loading-screen {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: white;
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 9999;
+transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+.loader {
+width: 48px;
+height: 48px;
+border: 5px solid #f3f3f3;
+border-top: 5px solid #FF0040;
+border-right: 5px solid #00A6FF;
+border-bottom: 5px solid #FF0040;
+border-radius: 50%;
+animation: spin 1s linear infinite;
+}
+@keyframes spin {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+input:focus, textarea:focus {
+outline: none;
+border-color: #6366f1;
+}
+.social-icon:hover {
+transform: translateY(-5px);
+}
+.nav-link {
+position: relative;
+}
+.nav-link::after {
+content: '';
+position: absolute;
+width: 0;
+height: 2px;
+bottom: -4px;
+left: 0;
+background-color: #6366f1;
+transition: width 0.3s ease;
+}
+.nav-link:hover::after {
+width: 100%;
+}
+.project-card {
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.project-card:hover {
+transform: translateY(-10px);
+box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+</style>
+</head>
+<body>
+<div class="loading-screen" id="loadingScreen">
+<div class="loader"></div>
+</div>
+<div class="motion-bg"></div>
+<header class="fixed top-0 left-0 w-full bg-white bg-opacity-90 shadow-md z-50 transition-all duration-300">
+<div class="container mx-auto px-6 py-4 flex justify-between items-center">
+<a href="#" class="text-2xl font-semibold text-gray-800">SyedTouseef</a>
+<nav class="hidden md:flex items-center space-x-8">
+<a href="#home" class="nav-link flex items-center text-gray-700 hover:text-primary transition-colors">
+<div class="w-5 h-5 mr-2 flex items-center justify-center">
+<i class="ri-home-4-line"></i>
+</div>
+Home
+</a>
+<a href="#about" class="nav-link flex items-center text-gray-700 hover:text-primary transition-colors">
+<div class="w-5 h-5 mr-2 flex items-center justify-center">
+<i class="ri-user-line"></i>
+</div>
+About
+</a>
+<a href="#projects" class="nav-link flex items-center text-gray-700 hover:text-primary transition-colors">
+<div class="w-5 h-5 mr-2 flex items-center justify-center">
+<i class="ri-code-box-line"></i>
+</div>
+Projects
+</a>
+<a href="#contact" class="nav-link flex items-center text-gray-700 hover:text-primary transition-colors">
+<div class="w-5 h-5 mr-2 flex items-center justify-center">
+<i class="ri-mail-line"></i>
+</div>
+Contact Us
+</a>
+</nav>
+<button class="md:hidden w-10 h-10 flex items-center justify-center text-gray-700" id="mobileMenuButton">
+<i class="ri-menu-line ri-lg"></i>
+</button>
+</div>
+<div class="md:hidden hidden bg-white w-full absolute top-full left-0 shadow-md" id="mobileMenu">
+<div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+<a href="#home" class="flex items-center text-gray-700 hover:text-primary transition-colors py-2">
+<div class="w-5 h-5 mr-2 flex items-center justify-center">
+<i class="ri-home-4-line"></i>
+</div>
+Home
+</a>
+<a href="#about" class="flex items-center text-gray-700 hover:text-primary transition-colors py-2">
+<div class="w-5 h-5 mr-2 flex items-center justify-center">
+<i class="ri-user-line"></i>
+</div>
+About
+</a>
+<a href="#projects" class="flex items-center text-gray-700 hover:text-primary transition-colors py-2">
+<div class="w-5 h-5 mr-2 flex items-center justify-center">
+<i class="ri-code-box-line"></i>
+</div>
+Projects
+</a>
+<a href="#contact" class="flex items-center text-gray-700 hover:text-primary transition-colors py-2">
+<div class="w-5 h-5 mr-2 flex items-center justify-center">
+<i class="ri-mail-line"></i>
+</div>
+Contact Us
+</a>
+</div>
+</div>
+</header>
+<main>
+<section id="home" class="min-h-screen flex items-center justify-center pt-20 pb-16">
+<div class="container mx-auto px-6 text-center">
+<div class="flex flex-col items-center mb-8">
+<div class="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-primary glow-effect shadow-xl">
+<img src="https://readdy.ai/api/search-image?query=professional%20portrait%20photo%20of%20a%20young%20south%20asian%20man%20with%20a%20friendly%20smile%2C%20modern%20haircut%2C%20wearing%20gaming%20headset%20and%20tech-inspired%20clothing%2C%20neon%20lighting%20effects%2C%20cyberpunk%20style%20studio%20background&width=500&height=500&seq=1&orientation=squarish" alt="SyedTouseef" class="w-full h-full object-cover">
+</div>
+</div>
+<h1 class="text-3xl md:text-4xl font-bold text-gray-800 mx-auto" id="nameText"></h1>
+<div class="mt-4 flex items-center justify-center text-lg md:text-xl text-gray-600">
+<div class="flex items-center">
+<div class="w-6 h-6 mr-2 flex items-center justify-center text-primary">
+<i class="ri-code-s-slash-line"></i>
+</div>
+<span>Developer</span>
+</div>
+<span class="mx-3">│</span>
+<div class="flex items-center">
+<div class="w-6 h-6 mr-2 flex items-center justify-center text-primary">
+<i class="ri-gamepad-line"></i>
+</div>
+<span>Gamer</span>
+</div>
+</div>
+<div class="mt-12">
+<a href="#contact" class="bg-primary text-white px-8 py-3 rounded-button font-medium hover:bg-opacity-90 transition-all shadow-lg hover:shadow-xl whitespace-nowrap glow-effect relative overflow-hidden group">
+<span class="relative z-10">Get in Touch</span>
+<div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-0 group-hover:opacity-50 transition-opacity"></div>
+</a>
+</div>
+</div>
+</section>
+<section id="about" class="py-20 bg-gray-50">
+<div class="container mx-auto px-6">
+<h2 class="text-3xl font-bold text-center text-gray-800 mb-16 fade-in">About Me</h2>
+<div class="grid md:grid-cols-2 gap-12">
+<div class="fade-in">
+<h3 class="text-2xl font-semibold text-gray-800 mb-6">Who I Am</h3>
+<p class="text-gray-600 mb-6 leading-relaxed">
+Hello! I'm Syed Touseef, a passionate web developer and gaming enthusiast based in Multan, Pakistan. I love creating beautiful, functional websites and applications that solve real-world problems.
+</p>
+<p class="text-gray-600 mb-6 leading-relaxed">
+When I'm not coding, you'll find me gaming or creating content for my YouTube channel. I believe in continuous learning and pushing my creative boundaries with every project.
+</p>
+<div class="flex items-center mb-4">
+<div class="w-6 h-6 mr-3 flex items-center justify-center text-primary">
+<i class="ri-map-pin-line"></i>
+</div>
+<span class="text-gray-700">Multan, Pakistan</span>
+</div>
+<div class="flex items-center">
+<div class="w-6 h-6 mr-3 flex items-center justify-center text-primary">
+<i class="ri-mail-line"></i>
+</div>
+<a href="mailto:syedtouseef100@gmail.com" class="text-gray-700 hover:text-primary transition-colors">syedtouseef100@gmail.com</a>
+</div>
+</div>
+<div class="fade-in">
+<h3 class="text-2xl font-semibold text-gray-800 mb-6">My Skills</h3>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-medium text-gray-700 flex items-center">
+<div class="w-5 h-5 mr-2 flex items-center justify-center text-primary">
+<i class="ri-html5-line"></i>
+</div>
+HTML
+</span>
+<span class="text-gray-600">90%</span>
+</div>
+<div class="w-full bg-gray-200 rounded-full h-2">
+<div class="bg-gradient-to-r from-primary to-secondary h-2 rounded-full" style="width: 90%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-medium text-gray-700 flex items-center">
+<div class="w-5 h-5 mr-2 flex items-center justify-center text-primary">
+<i class="ri-css3-line"></i>
+</div>
+CSS
+</span>
+<span class="text-gray-600">85%</span>
+</div>
+<div class="w-full bg-gray-200 rounded-full h-2">
+<div class="bg-gradient-to-r from-primary to-secondary h-2 rounded-full" style="width: 85%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-medium text-gray-700 flex items-center">
+<div class="w-5 h-5 mr-2 flex items-center justify-center text-primary">
+<i class="ri-javascript-line"></i>
+</div>
+JavaScript
+</span>
+<span class="text-gray-600">75%</span>
+</div>
+<div class="w-full bg-gray-200 rounded-full h-2">
+<div class="bg-gradient-to-r from-primary to-secondary h-2 rounded-full" style="width: 75%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<span class="font-medium text-gray-700 flex items-center">
+<div class="w-5 h-5 mr-2 flex items-center justify-center text-primary">
+<i class="ri-responsive-line"></i>
+</div>
+Responsive Design
+</span>
+<span class="text-gray-600">80%</span>
+</div>
+<div class="w-full bg-gray-200 rounded-full h-2">
+<div class="bg-gradient-to-r from-primary to-secondary h-2 rounded-full" style="width: 80%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="projects" class="py-20">
+<div class="container mx-auto px-6">
+<h2 class="text-3xl font-bold text-center text-gray-800 mb-16 fade-in">My Projects</h2>
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="project-card bg-white rounded-lg shadow-md overflow-hidden fade-in">
+<div class="h-48 bg-gray-200">
+<img src="https://readdy.ai/api/search-image?query=modern%20e-commerce%20website%20interface%20with%20clean%20design%2C%20product%20showcase%2C%20shopping%20cart%20functionality%2C%20responsive%20layout%2C%20professional%20web%20design&width=600&height=400&seq=2&orientation=landscape" alt="E-commerce Website" class="w-full h-full object-cover">
+</div>
+<div class="p-6">
+<h3 class="text-xl font-semibold text-gray-800 mb-2">E-commerce Website</h3>
+<p class="text-gray-600 mb-4">A fully responsive e-commerce platform with product listings, cart functionality, and checkout process.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">HTML</span>
+<span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">CSS</span>
+<span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">JavaScript</span>
+</div>
+<a href="#" class="text-primary font-medium hover:underline flex items-center">
+<span>View Project</span>
+<div class="w-5 h-5 ml-1 flex items-center justify-center">
+<i class="ri-arrow-right-line"></i>
+</div>
+</a>
+</div>
+</div>
+<div class="project-card bg-white rounded-lg shadow-md overflow-hidden fade-in">
+<div class="h-48 bg-gray-200">
+<img src="https://readdy.ai/api/search-image?query=portfolio%20website%20design%20with%20modern%20layout%2C%20project%20showcase%2C%20about%20section%2C%20contact%20form%2C%20professional%20web%20design%20for%20creative%20professionals&width=600&height=400&seq=3&orientation=landscape" alt="Portfolio Template" class="w-full h-full object-cover">
+</div>
+<div class="p-6">
+<h3 class="text-xl font-semibold text-gray-800 mb-2">Portfolio Template</h3>
+<p class="text-gray-600 mb-4">A customizable portfolio template for creative professionals to showcase their work and skills.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">HTML</span>
+<span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">CSS</span>
+<span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">JavaScript</span>
+</div>
+<a href="#" class="text-primary font-medium hover:underline flex items-center">
+<span>View Project</span>
+<div class="w-5 h-5 ml-1 flex items-center justify-center">
+<i class="ri-arrow-right-line"></i>
+</div>
+</a>
+</div>
+</div>
+<div class="project-card bg-white rounded-lg shadow-md overflow-hidden fade-in">
+<div class="h-48 bg-gray-200">
+<img src="https://readdy.ai/api/search-image?query=weather%20application%20interface%20with%20city%20search%2C%20temperature%20display%2C%20weather%20conditions%2C%20forecast%20view%2C%20clean%20modern%20UI%20design&width=600&height=400&seq=4&orientation=landscape" alt="Weather App" class="w-full h-full object-cover">
+</div>
+<div class="p-6">
+<h3 class="text-xl font-semibold text-gray-800 mb-2">Weather App</h3>
+<p class="text-gray-600 mb-4">A weather application that provides real-time weather information and forecasts for any location.</p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">HTML</span>
+<span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">CSS</span>
+<span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">JavaScript</span>
+<span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">API</span>
+</div>
+<a href="#" class="text-primary font-medium hover:underline flex items-center">
+<span>View Project</span>
+<div class="w-5 h-5 ml-1 flex items-center justify-center">
+<i class="ri-arrow-right-line"></i>
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="text-center mt-12 fade-in">
+<a href="https://github.com/SyedTouseef123" target="_blank" class="inline-flex items-center bg-gray-800 text-white px-6 py-3 rounded-button font-medium hover:bg-gray-700 transition-all shadow-md hover:shadow-lg whitespace-nowrap">
+<div class="w-5 h-5 mr-2 flex items-center justify-center">
+<i class="ri-github-fill"></i>
+</div>
+View More on GitHub
+</a>
+</div>
+</div>
+</section>
+<section id="contact" class="py-20 bg-gray-50">
+<div class="container mx-auto px-6">
+<h2 class="text-3xl font-bold text-center text-gray-800 mb-16 fade-in">Get In Touch</h2>
+<div class="max-w-3xl mx-auto">
+<div class="grid md:grid-cols-2 gap-12 mb-12">
+<div class="fade-in">
+<h3 class="text-2xl font-semibold text-gray-800 mb-6">Contact Information</h3>
+<p class="text-gray-600 mb-8 leading-relaxed">
+Feel free to reach out to me for any inquiries, project collaborations, or just to say hello. I'll get back to you as soon as possible.
+</p>
+<div class="space-y-4">
+<div class="flex items-center">
+<div class="w-10 h-10 rounded-full bg-primary bg-opacity-10 flex items-center justify-center text-primary mr-4">
+<i class="ri-mail-line ri-lg"></i>
+</div>
+<div>
+<h4 class="text-sm text-gray-500">Email</h4>
+<a href="mailto:syedtouseef100@gmail.com" class="text-gray-700 hover:text-primary transition-colors">syedtouseef100@gmail.com</a>
+</div>
+</div>
+<div class="flex items-center">
+<div class="w-10 h-10 rounded-full bg-primary bg-opacity-10 flex items-center justify-center text-primary mr-4">
+<i class="ri-map-pin-line ri-lg"></i>
+</div>
+<div>
+<h4 class="text-sm text-gray-500">Location</h4>
+<p class="text-gray-700">Multan, Pakistan</p>
+</div>
+</div>
+</div>
+</div>
+<div class="fade-in">
+<form>
+<div class="mb-4">
+<label for="name" class="block text-gray-700 mb-2">Name</label>
+<input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded focus:border-primary" placeholder="Your name">
+</div>
+<div class="mb-4">
+<label for="email" class="block text-gray-700 mb-2">Email</label>
+<input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded focus:border-primary" placeholder="Your email">
+</div>
+<div class="mb-4">
+<label for="message" class="block text-gray-700 mb-2">Message</label>
+<textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded focus:border-primary" placeholder="Your message"></textarea>
+</div>
+<button type="submit" class="bg-primary text-white px-6 py-3 rounded-button font-medium hover:bg-opacity-90 transition-all shadow-md hover:shadow-lg whitespace-nowrap">Send Message</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-gray-900 text-white py-12">
+<div class="container mx-auto px-6">
+<div class="flex flex-col md:flex-row justify-between items-center">
+<div class="mb-8 md:mb-0">
+<h2 class="text-2xl font-semibold mb-4">SyedTouseef</h2>
+<p class="text-gray-400 max-w-md">Developer and gaming enthusiast creating beautiful web experiences.</p>
+</div>
+<div class="flex space-x-6">
+<a href="https://instagram.com/your_syed_touseef" target="_blank" class="social-icon w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-primary transition-all duration-300">
+<i class="ri-instagram-line ri-lg"></i>
+</a>
+<a href="https://github.com/SyedTouseef123" target="_blank" class="social-icon w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-primary transition-all duration-300">
+<i class="ri-github-line ri-lg"></i>
+</a>
+<a href="https://youtube.com/@ASSASSIAN_GAMING" target="_blank" class="social-icon w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-primary transition-all duration-300">
+<i class="ri-youtube-line ri-lg"></i>
+</a>
+</div>
+</div>
+<div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+<p>&copy; 2025 SyedTouseef. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// Loading screen
+setTimeout(function() {
+const loadingScreen = document.getElementById('loadingScreen');
+loadingScreen.style.opacity = '0';
+setTimeout(function() {
+loadingScreen.style.visibility = 'hidden';
+// Type text after loading screen disappears
+const nameText = document.getElementById('nameText');
+let text = "SyedTouseef";
+let index = 0;
+function typeText() {
+if (index < text.length) {
+nameText.textContent += text.charAt(index);
+index++;
+setTimeout(typeText, 100);
+}
+}
+typeText();
+}, 500);
+}, 1500);
+// Mobile menu toggle
+const mobileMenuButton = document.getElementById('mobileMenuButton');
+const mobileMenu = document.getElementById('mobileMenu');
+mobileMenuButton.addEventListener('click', function() {
+mobileMenu.classList.toggle('hidden');
+});
+// Close mobile menu when clicking a link
+const mobileLinks = mobileMenu.querySelectorAll('a');
+mobileLinks.forEach(link => {
+link.addEventListener('click', function() {
+mobileMenu.classList.add('hidden');
+});
+});
+});
+document.addEventListener('DOMContentLoaded', function() {
+// Scroll animations
+const fadeElements = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver((entries) => {
+entries.forEach(entry => {
+if (entry.isIntersecting) {
+entry.target.classList.add('visible');
+}
+});
+}, { threshold: 0.1 });
+fadeElements.forEach(element => {
+observer.observe(element);
+});
+});
+document.addEventListener('DOMContentLoaded', function() {
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+anchor.addEventListener('click', function(e) {
+e.preventDefault();
+const targetId = this.getAttribute('href');
+const targetElement = document.querySelector(targetId);
+if (targetElement) {
+window.scrollTo({
+top: targetElement.offsetTop - 80,
+behavior: 'smooth'
+});
+}
+});
+});
+// Header scroll effect
+const header = document.querySelector('header');
+window.addEventListener('scroll', function() {
+if (window.scrollY > 50) {
+header.classList.add('py-2', 'shadow-lg');
+header.classList.remove('py-4', 'shadow-md');
+} else {
+header.classList.add('py-4', 'shadow-md');
+header.classList.remove('py-2', 'shadow-lg');
+}
+});
+});
+</script>
+</body>
+</html>
